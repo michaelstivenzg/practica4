@@ -8,9 +8,9 @@ int main()
     enrutador ob1;
     bool bandera=false;
     vector<char> datos;
-    map<char,char> auxiliar;
-    int cant,costoEnlace,cont=0,subCant,tamAux;
-    char nomUno, nomDos;    
+    int cant,costoEnlace,cont=0,subCant = 0,tamAux;
+    char nomUno, nomDos;
+     map<char,char> auxiliar;
     cout<<"Ingrese la cantidad de enrutadores a la red: ";
     cin>>cant;
     while(cant<=0){
@@ -21,7 +21,7 @@ int main()
     while(true){
         cout<<"Ingrese el enrutador: ";
         cin>>nomUno;
-        auxiliar.insert(pair<char,bool>(nomUno,bandera));
+        auxiliar.insert(pair<char,char>(nomUno,bandera));
         tamAux=auxiliar.size();
         if(tamAux==cant){
             break;
@@ -35,14 +35,13 @@ int main()
         while(subCant>=cant || subCant<=0){
             cout<<"Cantidad erronea, digite nuevamente la cantidad: ";
             cin>>subCant;
-        }
+        }        
         while(true){
             cont++;
             cout<<"Ingrese el enrutador a enlazar con el enrutador ["<<nomUno<<"]: ";
             cin>>nomDos;
             auxiliar[iterador->first]=nomDos;
             auxiliar.insert(pair<char,char>(nomUno,auxiliar[iterador->first]));
-
             auto iterador2=auxiliar.begin();
             while(iterador2==auxiliar.end() || nomDos==nomUno || auxiliar.end()==auxiliar.find(nomDos)){
                 cout<<nomDos<<" no es un enrutador creado o son los mismos, ingrese el enrutador correcto: ";
@@ -50,6 +49,9 @@ int main()
             }
             cout<<"Ingrese el costo del enlace ["<<nomUno<<"] al enlace ["<<nomDos<<"]:  ";
             cin>>costoEnlace;
+            while(costoEnlace<=0){
+                cout<<"Valor incorrecto, ingrese nuevamente el costo de conexion: ";cin>>costoEnlace;
+            }
             ob1.guardarEnrutador(nomDos,costoEnlace,subCant);
             if(cont==subCant){
                 cont=0;
